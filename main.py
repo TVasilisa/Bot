@@ -10,6 +10,7 @@ from handlers.infoaboutuser import myinfo_router
 from handlers.random import random_router
 from handlers.review_dialog import review_router
 from handlers.menu import menu_item_router
+from handlers.review_dialog import menu_admin_router
 from handlers.other_messages import other_router
 
 
@@ -22,6 +23,7 @@ async def main():
     dp.include_router(review_router)
     dp.include_router(myinfo_router)
     dp.include_router(random_router)
+    dp.include_router(menu_admin_router)
     dp.include_router(menu_item_router)
     dp.include_router(other_router)
 

@@ -8,15 +8,16 @@ class Database:
     def create_tables(self):
         with sqlite3.connect(self.path) as conn:
             cursor = conn.cursor()
-            cursor.execute("DROP TABLE IF EXISTS review")
             cursor.execute("""
-            CREATE TABLE IF NOT EXISTS review (
+            CREATE TABLE IF NOT EXISTS review(
                 name TEXT,
                 phone_number TEXT,
                 rate INTEGER,
                 extra_comments TEXT
             )
             """)
+            conn.commit()
+
             conn.execute("""
                         CREATE TABLE IF NOT EXISTS menu(
                             dish_name TEXT,
@@ -31,8 +32,7 @@ class Database:
 
     def save_review(self, data: dict):
         with sqlite3.connect(self.path) as conn:
-            cursor = conn.cursor()
-            cursor.execute(
+            conn.execute(
                 """
                 INSERT INTO review (name, phone_number, rate, extra_comments)
                 VALUES (?, ?, ?, ?)
@@ -50,3 +50,22 @@ class Database:
                 """,
                 (data["dish_name"], data["description"], data["price"], data["category"], data["serving_size"]))
             conn.commit()
+
+
+    def get_all_dishes(self):
+        with sqlite3.connect(self.path) as conn:
+            cursor = conn.cursor()
+            result = cursor.execute("SELECT * FROM menu")
+            result.row_factory = sqlite3.Row
+            data = result.fetchall()
+            return [dict(row) for row in data]
+
+    def get_all_reviews(self):
+        with sqlite3.connect(self.path) as conn:
+            cursor = conn.cursor()
+            result = cursor.execute("SELECT * FROM review")
+            result.row_factory = sqlite3.Row
+            data = result.fetchall()
+            return [dict(row) for row in data]
+
+
