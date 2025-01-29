@@ -9,9 +9,8 @@ from bot_config import database
 review_router = Router()
 
 menu_admin_router = Router()
-menu_admin_router.message.filter(
-    F.from_user.id == 1379406454
-)
+ADMIN_ID = 1379406454
+menu_admin_router.message.filter(F.from_user.id == ADMIN_ID)
 
 
 class RestourantReview(StatesGroup):
@@ -77,9 +76,9 @@ async def process_extra_comments(message: types.Message, state: FSMContext):
     await state.clear()
 
 
-@menu_admin_router.callback_query(F.data == 'admin_review')
+@menu_admin_router.callback_query(F.data == 'admin_review', F.from_user.id == ADMIN_ID)
 async def admin_review_handler(callback: types.CallbackQuery):
-    if callback.from_user.id != 1379406454:
+    if callback.from_user.id != ADMIN_ID:
         await callback.message.answer("У вас нет прав для просмотра отзывов")
         return
 

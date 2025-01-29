@@ -22,10 +22,11 @@ class Database:
                         CREATE TABLE IF NOT EXISTS menu(
                             dish_name TEXT,
                             description TEXT,
-                            price INTEGER,
+                            price REAL,
                             category TEXT, 
-                            serving_size TEXT
-                        )
+                            serving_size TEXT,
+                            dish_image TEXT
+                            )
                         """)
 
             conn.commit()
@@ -45,10 +46,11 @@ class Database:
         with sqlite3.connect(self.path) as conn:
             conn.execute(
                 """
-                    INSERT INTO menu (dish_name, description, price, category, serving_size)
-                    VALUES (?, ?, ?, ?, ?)
+                    INSERT INTO menu (dish_name, description, price, category, serving_size, dish_image)
+                    VALUES (?, ?, ?, ?, ?, ?)
                 """,
-                (data["dish_name"], data["description"], data["price"], data["category"], data["serving_size"]))
+                (data["dish_name"], data["description"], data["price"], data["category"],
+                 data["serving_size"], data["dish_image"]))
             conn.commit()
 
 
