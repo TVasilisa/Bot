@@ -58,7 +58,7 @@ async def process_price(message: types.Message, state: FSMContext):
     try:
         price = float(price)
     except ValueError:
-        await message.answer("Вводите только числа (например, 12.5)")
+        await message.answer("Вводите только числа ")
         return
 
     if price <= 0:
