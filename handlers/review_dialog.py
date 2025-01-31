@@ -11,6 +11,7 @@ review_router = Router()
 menu_admin_router = Router()
 ADMIN_ID = 1379406454
 menu_admin_router.message.filter(F.from_user.id == ADMIN_ID)
+menu_admin_router.callback_query(F.message.from_user.id == ADMIN_ID)
 
 
 class RestourantReview(StatesGroup):

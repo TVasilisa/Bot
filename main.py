@@ -3,16 +3,18 @@ import logging
 from aiogram import Bot
 
 from bot_config import bot, dp, database
-
+from handlers import review_dialog
 
 from handlers.start import start_router
 from handlers.infoaboutuser import myinfo_router
 from handlers.random import random_router
 from handlers.review_dialog import review_router
 from handlers.menu import menu_item_router
+from handlers.groupfunctionality import punish_router
 from handlers.dishes import menu_router
 from handlers.review_dialog import menu_admin_router
 from handlers.other_messages import other_router
+
 
 
 async def on_startup(bot: Bot):
@@ -24,6 +26,7 @@ async def main():
     dp.include_router(review_router)
     dp.include_router(myinfo_router)
     dp.include_router(random_router)
+    dp.include_router(punish_router)
     dp.include_router(menu_admin_router)
     dp.include_router(menu_router)
     dp.include_router(menu_item_router)
